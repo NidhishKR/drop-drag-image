@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style type="text/css">
+	.mover {
+		width:60px; 
+		height:4em; 
+		line-height:4em; 
+		margin:10px; 
+		padding:5px; 
+		float:left; 
+		background:#ffff99; 
+		border:1px dotted #333333; 
+		text-align:center;
+	}
+</style>
+<script type="text/javascript">
+	function dragWord(dragEvent){
+		dragEvent.dataTransfer.setData("text/html",
+			dragEvent.target.getAttribute('src') +"|"+ dragEvent.target.parentNode.getAttribute('href') + "|" + dragEvent.target.parentNode.parentNode.id);
+	}
+	function dropWord(dropEvent){
+		var dropData = dropEvent.dataTransfer.getData("text/html");
+		var dropItems = dropData.split("|");
+		var prevElem = document.getElementById(dropItems[2]);
+		var imageUrl = dropEvent.target.getAttribute('src');
+		var linkUrl = dropEvent.target.parentNode.getAttribute('href')
+		prevElem.getElementsByTagName("img")[0].setAttribute('src', imageUrl);
+		prevElem.getElementsByTagName("a")[0].setAttribute('href', linkUrl);
+		dropEvent.target.setAttribute('src', dropItems[0]);
+		dropEvent.target.parentNode.setAttribute('href', dropItems[1]);
+		dropEvent.preventDefault();
+	}
+</script>
+</head>
+<body>
+	<div id="box1" ondragover="event.preventDefault()" ondrop="dropWord(event)">
+		<a href="https://www.w3schools.com/angular/angular_scopes.asp"><img src="images.jpg" class="mover" draggable="true" 
+		ondragstart="dragWord(event)"></img></a>
+	</div>
+	<div id="box2" ondragover="event.preventDefault()" ondrop="dropWord(event)">
+		<a href="https://www.w3schools.com/angular/tryit.asp?filename=try_ng_controller_property"><img src="images1.jpg" 
+		class="mover" draggable="true" ondragstart="dragWord(event)"></a>
+	</div>
+	<div id="box3" ondragover="event.preventDefault()" ondrop="dropWord(event)">
+		<a href="https://www.tcd.ie/courses/"><img src="images2.jpg" 
+		class="mover" draggable="true" ondragstart="dragWord(event)"></a>
+	</div>
+	<div id="box4" ondragover="event.preventDefault()" ondrop="dropWord(event)">
+		<a href="https://www.w3schools.com/angular/angular_scopes.asp"><img src="images3.jpg" 
+		class="mover" draggable="true" ondragstart="dragWord(event)"></a>
+	</div>
+	<div id="box5" ondragover="event.preventDefault()" ondrop="dropWord(event)">
+		<a href="https://www.tcd.ie/courses/"><img src="images4.jpg" 
+		class="mover" draggable="true" ondragstart="dragWord(event)"></a>
+	</div>
+	<div id="box6" ondragover="event.preventDefault()" ondrop="dropWord(event)">
+		<a href="https://www.w3schools.com/angular/angular_scopes.asp"><img src="images5.jpg" 
+		class="mover" draggable="true" ondragstart="dragWord(event)"></a>
+	</div>
+</body>
+</html>

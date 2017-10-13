@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<style type="text/css">
+	.mover {
+		width:60px; 
+		height:4em; 
+		line-height:4em; 
+		margin:10px; 
+		padding:5px; 
+		float:left; 
+		background:#ffff99; 
+		border:1px dotted #333333; 
+		text-align:center;
+	}
+</style>
+<body ng-app="myApp" ng-controller="myCtrl">
+	<ul ng-repeat= "banner in banners" id={{banner.name}} 
+	ondragover="event.preventDefault()"
+	ondrop="angular.element(this).scope().dropWord(event)">
+		<a href={{banner.href_link}}><img src={{banner.image_link}} class="mover" draggable="true" 
+		ondragstart="angular.element(this).scope().dragWord(event)"></img></a>
+	</ul>
+<script>
+var app = angular.module("myApp", []);
+app.controller("myCtrl", function($scope) {
+  $scope.banners = [
+		    {
+		      "name": "banner1",
+		      "image_link": "images.jpg",
+		      "href_link": "http://exmple.com/href1"
+		    },
+		    {
+		      "name": "banner2",
+		      "image_link": "images1.jpg",
+		      "href_link": "http://exmple.com/href2"
+		    },
+		    {
+		      "name": "banner3",
+		      "image_link": "images2.jpg",
+		      "href_link": "http://exmple.com/href3"
+		    }
+		  ]
+
+  $scope.dragWord = function (dragEvent) {
+  	dragEvent.dataTransfer.setData("text/html",
+			dragEvent.target.getAttribute('src') +"|"+ dragEvent.target.parentNode.getAttribute('href') + "|" + dragEvent.target.parentNode.parentNode.id);
+  };
+  $scope.dropWord = function(dropEvent) {
+  	var dropData = dropEvent.dataTransfer.getData("text/html");
+		var dropItems = dropData.split("|");
+		var prevElem = document.getElementById(dropItems[2]);
+		var imageUrl = dropEvent.target.getAttribute('src');
+		var linkUrl = dropEvent.target.parentNode.getAttribute('href')
+		prevElem.getElementsByTagName("img")[0].setAttribute('src', imageUrl);
+		prevElem.getElementsByTagName("a")[0].setAttribute('href', linkUrl);
+		dropEvent.target.setAttribute('src', dropItems[0]);
+		dropEvent.target.parentNode.setAttribute('href', dropItems[1]);
+		dropEvent.preventDefault();
+  }
+});
+</script>
+
+</body>
+</html>

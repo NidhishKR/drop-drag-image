@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style type="text/css">
+	.mover {
+		width:60px; 
+		height:4em; 
+		line-height:4em; 
+		margin:10px; 
+		padding:5px; 
+		float:left; 
+		background:#ffff99; 
+		border:1px dotted #333333; 
+		text-align:center;
+	}
+</style>
+<script type="text/javascript">
+	function dragWord(dragEvent){
+		dragEvent.dataTransfer.setData("text/html", 
+			dragEvent.target.getAttribute('src') +"|"+dragEvent.target.parentNode.id);
+	}
+	function dropWord(dropEvent){
+		var dropData = dropEvent.dataTransfer.getData("text/html");
+		var dropItems = dropData.split("|");
+		var prevElem = document.getElementById(dropItems[1]);
+		var srcUrl = dropEvent.target.getAttribute('src');
+		prevElem.getElementsByTagName("img")[0].setAttribute('src', srcUrl);
+		dropEvent.target.setAttribute('src', dropItems[0]);
+		dropEvent.preventDefault();
+	}
+</script>
+</head>
+<body>
+	<div id="box1" ondragover="event.preventDefault()" ondrop="dropWord(event)">
+		<img src="images.jpg" class="mover" draggable="true" 
+		ondragstart="dragWord(event)">
+	</div>
+	<div id="box2" ondragover="event.preventDefault()" ondrop="dropWord(event)">
+		<img src="images1.jpg" 
+		class="mover" draggable="true" ondragstart="dragWord(event)">
+	</div>
+	<div id="box3" ondragover="event.preventDefault()" ondrop="dropWord(event)">
+		<img src="images2.jpg" 
+		class="mover" draggable="true" ondragstart="dragWord(event)">
+	</div>
+	<div id="box4" ondragover="event.preventDefault()" ondrop="dropWord(event)">
+		<img src="images3.jpg" 
+		class="mover" draggable="true" ondragstart="dragWord(event)">
+	</div>
+	<div id="box5" ondragover="event.preventDefault()" ondrop="dropWord(event)">
+		<img src="images4.jpg" 
+		class="mover" draggable="true" ondragstart="dragWord(event)">
+	</div>
+	<div id="box6" ondragover="event.preventDefault()" ondrop="dropWord(event)">
+		<img src="images5.jpg" 
+		class="mover" draggable="true" ondragstart="dragWord(event)">
+	</div>
+</body>
+</html>
